@@ -54,7 +54,7 @@ def question_5(substances: list, D: dict, c: dict, M: dict, K, I0, T):
         output[substance]["Q"] = Q_output
         output[substance]["I"] = I_output
         output[substance]["Cost"] = cost
-
+        m.write("model.lp")
 
     A_table = pd.DataFrame(output["A"])
     B_table = pd.DataFrame(output["B"])
@@ -306,8 +306,8 @@ if __name__=="__main__":
     T = 8
 
     question_5(substances, D, c, M, K, I0, T)
-    question_6(substances, D, c, M, K, I0, T)
-    question_7(substances, D, c, M, K, I0, T)
-
-    question_8_supplier_X(D=D_a, capacity=350, c=5, h=0.5, K=500, I0=I0, T=T)
-    question_8_supplier_Y(D=D_a, capacity=350, c=5, h=0.5, K=400, I0=I0, T=T)
+    # question_6(substances, D, c, M, K, I0, T)
+    # question_7(substances, D, c, M, K, I0, T)
+    #
+    # question_8_supplier_X(D=D_a, capacity=350, c=5, h=0.5, K=500, I0=I0, T=T)
+    # question_8_supplier_Y(D=D_a, capacity=350, c=5, h=0.5, K=400, I0=I0, T=T)
