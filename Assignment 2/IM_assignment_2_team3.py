@@ -1,6 +1,72 @@
-import random
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+import random
+
+
+def question1_5():
+       # question 1
+       # Demand distribution
+       T_1 = list(range(1,25))
+       D_1 = [216,	225, 249, 224, 217, 206, 237, 221, 199, 233, 194, 181,
+              247, 184, 262, 216, 217, 219, 241, 197, 229, 213, 225, 211]
+
+       # Step 1 : plot demand data
+       plt.plot(D_1)
+       plt.title('Demand')
+       plt.xlabel('Collection interval')
+       plt.ylabel('Accumulated demand')
+       plt.show()
+
+       # question 2
+       mean = np.mean(D_1)
+       stdev = np.std(D_1)
+
+       print('The mean is:', mean)
+       print('The standard deviation is:', stdev)
+
+       # question 3
+       hist_dat = [[i,D_1.count(i)] for i in set(D_1)]
+       df_1 = pd.DataFrame(data = hist_dat, columns = ['D', 'frequency'])
+       df_1.sort_values(by=["D"], inplace=True)
+       df_1.plot(x = 'D', y = 'frequency', kind = 'bar')
+       plt.show()
+
+       # step 3: transform frequency into empirical probability dist
+       obs = len(T_1)
+       df_1 ['prob'] = df_1['frequency']/obs
+       df_1.plot (x = 'D', y = 'prob', kind = 'bar')
+       plt.show()
+
+       sum(df_1 ['prob'])
+
+       # question 4
+
+       # cumulative distribution
+       df_1["cum"] = df_1["prob"].cumsum()
+       plt.plot(df_1["D"], df_1["cum"])
+       plt.show()
+
+       # part 2 question 4
+       # Plot the histogram.
+       plt.hist(D_1, bins=10, density=True)
+
+       # Plot the PDF.
+       xmin, xmax = plt.xlim()
+       x = np.linspace(xmin, xmax, 100)
+       p = norm.pdf(x, mean, stdev)
+       plt.plot(x, p, 'k', linewidth=2)
+
+       plt.show()
+
+       # question 5
+       # convert mean and stdev to daily
+       collection_period = 21
+       mean_daily_demand = mean/collection_period
+       stdev_daily_demand = stdev/np.sqrt(collection_period)
+       print('The daily mean is:', mean_daily_demand)
+       print('The daily standard deviation is:', stdev_daily_demand)
 
 
 def simulation_T_S(fixed_cycle_length, S):
@@ -169,6 +235,7 @@ def question_6():
     df_sim, KPIs = simulation_T_S(fixed_cycle_length=21, S=optimal_S)
     print(KPIs)
 
+
 def question_7():
     # question 7 --> (T,S)
     results = {}
@@ -206,6 +273,7 @@ def question_8():
     df_sim, KPIs = simulation_s_S(s=optimal_s, S=optimal_S, K=900)
     print(KPIs)
 
+
 def question_10():
     results = {}
     S_range = range(100, 400)
@@ -232,7 +300,8 @@ def question_10():
 
 
 if __name__ == "__main__":
-    question_6()
-    question_7()
-    question_8()
-    question_10()
+       question1_5()
+       question_6()
+       question_7()
+       question_8()
+       question_10()
